@@ -1,0 +1,78 @@
+:root {
+    --primary-color: #4a6bff;
+    --secondary-color: #00c9a7;
+    --dark-color: #2d3748;
+    --light-color: #f8f9fa;
+}
+        
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+}
+        
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--primary-color) !important;
+}
+        
+.hero-section {
+    background: linear-gradient(135deg, #f5f7ff 0%, #e8ecff 100%);
+    padding: 5rem 0;
+}
+        
+.hero-title {
+    font-weight: 700;
+    color: var(--dark-color);
+}
+        
+.hero-subtitle {
+    color: #4a5568;
+}
+        
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    padding: 0.6rem 1.5rem;
+}
+        
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: white;
+    padding: 0.6rem 1.5rem;
+}
+        
+.feature-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+        
+.section-title {
+    position: relative;
+    padding-bottom: 15px;
+}
+        
+.section-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: var(--secondary-color);
+}
+
+.cta-section {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #6a5acd 100%);
+    color: white;
+    padding: 4rem 0;
+    border-radius: 10px;
+}
+
+footer {
+    background-color: var(--dark-color);
+    color: white;
+ }
