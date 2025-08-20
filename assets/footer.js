@@ -1,4 +1,21 @@
 document.write(`
+    <!-- CTA Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="cta-section">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="mb-4">Ready to Automate Your Shopify COD Reconciliation?</h2>
+                        <p class="mb-5">Join hundreds of Shopify stores that have eliminated manual reconciliation headaches.</p>
+                        <div class="d-flex flex-column flex-md-row justify-content-center gap-3">
+                            <a href="contact.html" class="btn btn-light btn-lg">Contact Us</a>
+                            <a href="pricing.html" class="btn btn-outline-light btn-lg">See Pricing</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <footer class="py-5">
         <div class="container">
             <div class="row">

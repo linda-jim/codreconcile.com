@@ -20,14 +20,11 @@ document.write(`
                     <a class="nav-link" href="pricing.html">Pricing</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="about.html">About Us</a>
                 </li>
             </ul>
             <div class="ms-lg-3 mt-3 mt-lg-0">
-                <a href="demo.html" class="btn btn-primary">Request Demo</a>
+                <a href="contact.html" class="btn btn-primary">Contact Us</a> <!-- DEMO button originally -->
             </div>
         </div>
     </div>
