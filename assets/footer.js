@@ -28,14 +28,13 @@ document.write(`
                     </ul>
                 </div>
                 <div class="col-lg-4">
-                    <h5 class="text-white mb-4">Newsletter</h5>
-                    <p class="text-white-50">Subscribe to get updates and product announcements.</p>
-                    <form class="mt-4">
-                        <div class="input-group mb-3">
-                            <input type="email" class="form-control" placeholder="Your email address">
-                            <button class="btn btn-primary" type="button">Subscribe</button>
-                        </div>
-                    </form>
+                    <h5 class="text-white mb-4">Get In Touch</h5>
+                    <ul class="list-unstyled text-white-50">
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@codreconcile.com</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +971 52 8280650</li>
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Dubai, United Arab Emirates</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-outline-light btn-sm mt-2">Contact Support</a>
                 </div>
             </div>
             <hr class="my-4 bg-secondary">
@@ -43,6 +42,7 @@ document.write(`
                 <div class="col-md-6 text-center text-md-start">
                     <p class="small text-white-50 mb-0">© 2025 CODReconcile by Zero Delta Solutions. All rights reserved.</p>
                 </div>
+                <!--PRIVACY POLICY AND TERMS
                 <div class="col-md-6 text-center text-md-end">
                     <p class="small text-white-50 mb-0">
                         <a href="#" class="text-white-50">Privacy Policy</a> | 
@@ -50,6 +50,7 @@ document.write(`
                         <a href="#" class="text-white-50">GDPR</a>
                     </p>
                 </div>
+                -->
             </div>
         </div>
     </footer>
