@@ -22,7 +22,7 @@ document.write(`
                 <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
                     <h5 class="text-white mb-4">Company</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50">About Us</a></li>
+                        <li class="mb-2"><a href="about.html" class="text-white-50">About Us</a></li>
                         <li class="mb-2"><a href="contact.html" class="text-white-50">Contact</a></li>
                         <li class="mb-2"><a href="contact.html" class="text-white-50">Careers</a></li>
                     </ul>
