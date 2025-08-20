@@ -47,12 +47,6 @@
     </style>
 </head>
 <body>
-    <!--Contact Info-->
-    <script>
-        const CONTACT_EMAIL = "info@codreconcile.com";
-        const CONTACT_PHONE = "+971 52 8280650";
-    </script>
-
     <!-- Navigation -->
     <script src="assets/navbar.js"></script>
 
@@ -177,18 +171,34 @@
         </div>
     </section>
 
+    <!--Loading Contact Info -->
+    <script src="assets/config.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const emailLink = document.getElementById("email-link");
+        const phoneLink = document.getElementById("phone-link");
+        const phoneText = document.getElementById("phone-text");
+
+        if (emailLink) {
+        emailLink.textContent = CONTACT_EMAIL;
+        emailLink.href = `mailto:${CONTACT_EMAIL}`;
+        }
+
+        if (phoneLink) {
+        phoneLink.textContent = CONTACT_PHONE;
+        }
+
+        if (phoneText) {
+        phoneText.textContent = CONTACT_PHONE;
+        }
+    });
+    </script>
+
     <!-- CTA + Footer -->
     <script src="assets/footer.js"></script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!--Contact Info-->
-    <script>
-        document.getElementById("email-link").textContent = CONTACT_EMAIL;
-        document.getElementById("email-link").href = "mailto:" + CONTACT_EMAIL;
-        document.getElementById("phone-link").textContent = CONTACT_PHONE;
-        document.getElementById("phone-text").textContent = CONTACT_PHONE;
-    </script>
 </body>
 </html>

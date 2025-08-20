@@ -16,18 +16,24 @@ document.write(`
             </div>
         </div>
     </section>
+
+    <!--Footer Section -->
     <footer class="py-5">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 mb-4 mb-lg-0">
                     <h5 class="text-white mb-4">CODReconcile</h5>
                     <p>Automate Shopify COD reconciliation with Zero Delta Solutions.<br>Save time, control revenue leakages, and gain real-time visibility into your cash flow.</p>
+                    
+                    <!-- Social Media Links
                     <div class="mt-4">
                         <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
                         <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
                         <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
                     </div>
+                    -->
+
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
                     <h5 class="text-white mb-4">Product</h5>
@@ -47,8 +53,8 @@ document.write(`
                 <div class="col-lg-4">
                     <h5 class="text-white mb-4">Get In Touch</h5>
                     <ul class="list-unstyled text-white-50">
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@codreconcile.com</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +971 52 8280650</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i><a href="mailto:${CONTACT_EMAIL}"class="text-white-50">${CONTACT_EMAIL}</a></li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> ${CONTACT_PHONE}</li>
                         <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Dubai, United Arab Emirates</li>
                     </ul>
                     <a href="contact.html" class="btn btn-outline-light btn-sm mt-2">Contact Support</a>
@@ -59,6 +65,7 @@ document.write(`
                 <div class="col-md-6 text-center text-md-start">
                     <p class="small text-white-50 mb-0">© 2025 CODReconcile by Zero Delta Solutions. All rights reserved.</p>
                 </div>
+                
                 <!--PRIVACY POLICY AND TERMS
                 <div class="col-md-6 text-center text-md-end">
                     <p class="small text-white-50 mb-0">
@@ -68,6 +75,7 @@ document.write(`
                     </p>
                 </div>
                 -->
+
             </div>
         </div>
     </footer>
