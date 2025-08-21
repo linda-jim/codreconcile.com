@@ -2,7 +2,7 @@ document.write(`
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="home.html">
-            <img src="images/ZDBag.png" class="d-inline-block align-text-top me-2" style="width: 70px; height: 65px;">
+            <img src="images/Logo.png" class="d-inline-block align-text-top me-2" style="width: 75px; height: 80px;">
             <div>
                 <span style="font-weight: 800; color: #e0b32e">COD</span> Reconciliation
                 <small class="d-block text-muted" style="font-size: 0.8rem; line-height: 1;">built for Shopify</small>
