@@ -5,7 +5,7 @@ document.write(`
             <img src="images/Logo.png" class="d-inline-block align-text-top me-2" style="width: 75px; height: 80px;">
             <div>
                 <span style="font-weight: 800; color: #e0b32e">COD</span> Reconciliation
-                <small class="d-block text-muted" style="font-size: 0.8rem; line-height: 1;">built for Shopify</small>
+                <small class="d-block text-muted" style="font-size: 0.8rem; line-height: 1;">powered by Zero Delta Solutions</small>
             </div>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
