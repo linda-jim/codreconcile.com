@@ -54,7 +54,7 @@ document.write(`
                     <h5 class="text-white mb-4">Get In Touch</h5>
                     <ul class="list-unstyled text-white-50">
                         <li class="mb-2"><i class="fas fa-envelope me-2"></i><a href="mailto:${CONTACT_EMAIL}"class="text-white-50">${CONTACT_EMAIL}</a></li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> ${CONTACT_PHONE}</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> <a href="mailto:${CONTACT_PHONE}"class="text-white-50">${CONTACT_PHONE}</a></li>
                         <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Dubai, United Arab Emirates</li>
                     </ul>
                     <a href="contact.html" class="btn btn-outline-light btn-sm mt-2">Contact Support</a>
