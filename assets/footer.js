@@ -25,14 +25,13 @@ document.write(`
                     <h5 class="text-white mb-4">CODReconcile</h5>
                     <p>Automate Shopify COD reconciliation with Zero Delta Solutions.<br>Save time, control revenue leakages, and gain real-time visibility into your cash flow.</p>
                     
-                    <!-- Social Media Links
+                    <!-- Social Media Links -->
                     <div class="mt-4">
-                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                        <!-- <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a> -->
+                        <!-- <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a> -->
+                        <a href="https://www.linkedin.com/company/zero-delta-solutions-dubai/" class="text-white me-3" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                        <!-- <a href="#" class="text-white"><i class="fab fa-instagram"></i></a> -->
                     </div>
-                    -->
 
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
