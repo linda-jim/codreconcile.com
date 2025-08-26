@@ -23,45 +23,40 @@
             transform: translateY(-5px);
         }
         .team-member {
+            border-radius: 25px;
             text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 2rem;
             margin-bottom: 2rem;
+            width: 90%;
+            height: 93%;
         }
         .team-member img {
-            width: 150px;
-            height: 150px;
+            width: 175px;
+            height: 175px;
             object-fit: cover;
             border-radius: 50%;
             margin-bottom: 1rem;
             border: 5px solid white;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .timeline {
-            position: relative;
-            padding-left: 50px;
+        .team-role {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
         }
-        .timeline:before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: var(--primary-color);
+        .team-bio {
+            color: #666;
+            margin-bottom: 20px;
+            flex-grow: 1;
         }
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2rem;
+        .team-social a {
+            display: inline-block;
+            transition: all 0.2s ease;
         }
-        .timeline-item:before {
-            content: '';
-            position: absolute;
-            left: -38px;
-            top: 5px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: white;
-            border: 3px solid var(--primary-color);
+        .team-social a:hover {
+            transform: translateY(-3px);
         }
     </style>
 </head>
@@ -120,6 +115,42 @@
         </div>
     </section>
 
+    <!-- MEET THE TEAM Section -->
+    <section id="team" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Meet the Team</h2>
+                <p class="text-muted">The passionate people behind CODReconcile</p>
+            </div>
+            <div class="justify-content-center row">
+                <div class="col-md-4">
+                    <div class="team-member">
+                        <img src="/images/Jim.jpeg">
+                        <h4>Jim Jacob</h4>
+                        <div class="team-role">Product Head</div>
+                        <p class="team-bio">IT professional with over 20 years of experience and diverse background in product 
+                        design, systems development, and fintech innovation. Strong expertise in translating ideas into 
+                        practical, high-impact solutions, with strong capabilities in negotiation and cross-functional collaboration</p>
+                        <div class="team-social">
+                            <a href="https://www.linkedin.com/in/jimangamaly/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin text-primary"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/150?">
+                        <h4>Rajiv Verma</h4>
+                        <div class="team-role">Senior Subject Matter Expert</div>
+                        <p class="team-bio">with 20+ years of large deployment experience of Order to Cash and Treasury management</p>
+                        <div class="team-social"> 
+                            <a href="https://www.linkedin.com/in/rajver/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin text-primary"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Values Section -->
     <section class="py-5 bg-light">
         <div class="container">
@@ -158,50 +189,6 @@
             </div>
         </div>
     </section>
-
-    <!-- MEET THE TEAM Section 
-    <section id="team" class="py-5 bg-light">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title">Meet the Team</h2>
-                <p class="text-muted">The passionate people behind CODReconcile</p>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="team-member">
-                        <img src="https://via.placeholder.com/150?text=Founder" alt="Founder">
-                        <h4>Jim Jacob</h4>
-                        <p class="text-muted">Founder</p>
-                        <div class="social-links">
-                            <a href="#"><i class="fab fa-linkedin text-primary"></i></a>
-                            <a href="#"><i class="fab fa-twitter text-primary ms-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="team-member">
-                        <img src="https://via.placeholder.com/150?text=CTO" alt="CTO">
-                        <h4>Person Two</h4>
-                        <p class="text-muted">Chief Technology Officer</p>
-                        <div class="social-links">
-                            <a href="#"><i class="fab fa-linkedin text-primary"></i></a>
-                            <a href="#"><i class="fab fa-github text-primary ms-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="team-member">
-                        <img src="https://via.placeholder.com/150?text=Head+CS" alt="Customer Success">
-                        <h4>Person 3</h4>
-                        <p class="text-muted">Head of Customer Success</p>
-                        <div class="social-links">
-                            <a href="#"><i class="fab fa-linkedin text-primary"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
 
     <!-- CTA + Footer -->
     <script src="assets/config.js"></script>
