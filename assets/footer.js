@@ -44,7 +44,6 @@ document.write(`
                 <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
                     <h5 class="text-white mb-4">Company</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="support.html" class="text-white-50">Support Center</a></li>
                         <li class="mb-2"><a href="about.html" class="text-white-50">About Us</a></li>
                         <li class="mb-2"><a href="contact.html" class="text-white-50">Contact</a></li>
                         <li class="mb-2"><a href="contact.html" class="text-white-50">Careers</a></li>
@@ -57,7 +56,7 @@ document.write(`
                         <li class="mb-2"><i class="fas fa-phone me-2"></i> <a href="mailto:${CONTACT_PHONE}"class="text-white-50">${CONTACT_PHONE}</a></li>
                         <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Dubai, United Arab Emirates</li>
                     </ul>
-                    <a href="contact.html" class="btn btn-outline-light btn-sm mt-2">Contact Support</a>
+                    <a href="support.html" class="btn btn-outline-light btn-sm mt-2">Support Center</a>
                 </div>
             </div>
             <hr class="my-4 bg-secondary">
@@ -65,17 +64,6 @@ document.write(`
                 <div class="col-md-6 text-center text-md-start">
                     <p class="small text-white-50 mb-0">© 2025 CODReconcile by Zero Delta Solutions. All rights reserved.</p>
                 </div>
-                
-                <!--PRIVACY POLICY AND TERMS
-                <div class="col-md-6 text-center text-md-end">
-                    <p class="small text-white-50 mb-0">
-                        <a href="#" class="text-white-50">Privacy Policy</a> | 
-                        <a href="#" class="text-white-50">Terms of Service</a> | 
-                        <a href="#" class="text-white-50">GDPR</a>
-                    </p>
-                </div>
-                -->
-
             </div>
         </div>
     </footer>
