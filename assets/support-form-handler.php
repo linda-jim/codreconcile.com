@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $subject = htmlspecialchars($_POST['subject']);
     $message = htmlspecialchars($_POST['message']);
 
-    $to = "info@codreconcile.com";
+    $to = "support@codreconcile.com";
     $email_subject = "Support Request: $subject";
     
     // Build email content
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Set headers for HTML email
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    $headers .= "From: info@codreconcile.com" . "\r\n";
+    $headers .= "From: support@codreconcile.com" . "\r\n";
     $headers .= "Reply-To: $email" . "\r\n";
     
     // Handle file attachment if exists
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Change headers for multipart
         $headers = "MIME-Version: 1.0\r\n";
-        $headers .= "From: info@codreconcile.com\r\n";
+        $headers .= "From: support@codreconcile.com\r\n";
         $headers .= "Reply-To: $email\r\n";
         $headers .= "Content-Type: multipart/mixed; boundary = \"$boundary\"\r\n\r\n";
         
