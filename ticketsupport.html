@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Sign In | CODReconcile</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/Favicon.png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .auth-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .auth-left {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #6a5acd 100%);
+            color: white;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .auth-right {
+            padding: 3rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .support-card {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            height: 100%;
+            border: none;
+        }
+        
+        .support-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .ticket-badge {
+            font-size: 0.85rem;
+            padding: 0.35rem 0.65rem;
+            border-radius: 50px;
+        }
+        
+        .dashboard-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .nav-brand {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        /* Ticket status colors */
+        .status-open {
+            background-color: #e8f4ff;
+            color: #0066cc;
+        }
+        
+        .status-pending {
+            background-color: #fff8e6;
+            color: #cc9900;
+        }
+        
+        .status-resolved {
+            background-color: #e6f7ee;
+            color: #00a65a;
+        }
+        
+        .status-closed {
+            background-color: #f8f9fa;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main container that will hold our different views -->
+    <div class="container py-4" id="app-container">
+        <!-- Content will be dynamically loaded here -->
+    </div>
+
+    <!-- JavaScript implementation -->
+    <script>
+        // Data storage (in a real app, this would be a backend)
+        const supportTickets = JSON.parse(localStorage.getItem('supportTickets')) || [];
+        let currentUser = null;
+
+        // Ticket number generator function :cite[4]
+        const generateTicketNumber = () => {
+            const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 
+                            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+            const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+            const numbers = Math.floor(10000 + Math.random() * 90000); // 5-digit number
+            return `TKT-${randomLetter}${numbers}`;
+        };
+
+        // Email validation function :cite[7]:cite[9]
+        const isValidEmail = (email) => {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailPattern.test(email);
+        };
+
+        // Check if email is admin email (ends with codreconcile.com)
+        const isAdminEmail = (email) => {
+            return email.toLowerCase().endsWith('@codreconcile.com');
+        };
+
+        // Save tickets to localStorage
+        const saveTickets = () => {
+            localStorage.setItem('supportTickets', JSON.stringify(supportTickets));
+        };
+
+        // Show a specific view
+        const showView = (viewName) => {
+            const appContainer = document.getElementById('app-container');
+            
+            switch(viewName) {
+                case 'signin':
+                    appContainer.innerHTML = renderSignInView();
+                    break;
+                case 'customer-dashboard':
+                    if (!currentUser) {
+                        showView('signin');
+                        return;
+                    }
+                    appContainer.innerHTML = renderCustomerDashboard();
+                    break;
+                case 'admin-dashboard':
+                    if (!currentUser || !isAdminEmail(currentUser.email)) {
+                        showView('signin');
+                        return;
+                    }
+                    appContainer.innerHTML = renderAdminDashboard();
+                    break;
+                case 'new-ticket':
+                    if (!currentUser) {
+                        showView('signin');
+                        return;
+                    }
+                    appContainer.innerHTML = renderNewTicketForm();
+                    break;
+                default:
+                    appContainer.innerHTML = renderSignInView();
+            }
+        };
+
+        // Handle sign in
+        const handleSignIn = (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Basic validation
+            if (!isValidEmail(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters.');
+                return;
+            }
+            
+            // Set current user (in a real app, verify credentials with backend)
+            currentUser = { email, password };
+            
+            // Redirect based on email domain
+            if (isAdminEmail(email)) {
+                showView('admin-dashboard');
+            } else {
+                showView('customer-dashboard');
+            }
+        };
+
+        // Handle new ticket submission
+        const handleNewTicket = (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const issueType = formData.get('issueType');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Generate ticket number only if not a feature suggestion
+            const ticketNumber = issueType !== 'suggestion' ? generateTicketNumber() : null;
+            
+            // Create ticket object
+            const newTicket = {
+                id: Date.now(),
+                ticketNumber,
+                email: currentUser.email,
+                issueType,
+                subject,
+                message,
+                status: issueType === 'suggestion' ? 'suggestion' : 'open',
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            
+            // Add to tickets array
+            supportTickets.push(newTicket);
+            saveTickets();
+            
+            // Show confirmation and redirect
+            alert(issueType === 'suggestion' 
+                ? 'Thank you for your suggestion! Our team will review it.' 
+                : `Ticket created successfully! Your ticket number is: ${ticketNumber}`);
+            
+            showView('customer-dashboard');
+        };
+
+        // Handle admin ticket update
+        const handleTicketUpdate = (ticketId, status, response) => {
+            const ticket = supportTickets.find(t => t.id === ticketId);
+            if (ticket) {
+                ticket.status = status;
+                ticket.adminResponse = response;
+                ticket.updatedAt = new Date().toISOString();
+                saveTickets();
+                
+                // Re-render admin dashboard
+                showView('admin-dashboard');
+            }
+        };
+
+        // Render functions for each view
+        const renderSignInView = () => {
+            return `
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="auth-container">
+                            <div class="row g-0">
+                                <div class="col-md-6 auth-left">
+                                    <h2 class="mb-4">CODReconcile Support Center</h2>
+                                    <p>Access your customer support dashboard to get help with your account, report issues, or suggest new features.</p>
+                                    <div class="mt-5">
+                                        <h5 class="mb-3"><i class="fas fa-shield-alt me-2"></i>Secure Login</h5>
+                                        <h5 class="mb-3"><i class="fas fa-ticket-alt me-2"></i>Ticket Management</h5>
+                                        <h5><i class="fas fa-headset me-2"></i>24/7 Support</h5>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 auth-right">
+                                    <div class="text-center mb-5">
+                                        <h3 class="fw-bold">Sign In to Support</h3>
+                                        <p class="text-muted">Enter your credentials to access the support portal</p>
+                                    </div>
+                                    <form id="signin-form">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email Address</label>
+                                            <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="password" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                                        </div>
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary btn-lg">Sign In</button>
+                                        </div>
+                                    </form>
+                                    <div class="text-center mt-4">
+                                        <p class="text-muted">Don't have an account? <a href="contact.html" onclick="showView('signup')">Contact us</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        const renderCustomerDashboard = () => {
+            const userTickets = supportTickets.filter(t => t.email === currentUser.email);
+            
+            return `
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="navbar dashboard-nav mb-4 rounded">
+                            <div class="container-fluid">
+                                <a class="navbar-brand nav-brand" href="#">
+                                    <i class="fas fa-life-ring me-2"></i>Support Center
+                                </a>
+                                <div class="d-flex">
+                                    <span class="navbar-text me-3">Welcome, ${currentUser.email}</span>
+                                    <button class="btn btn-outline-secondary btn-sm" onclick="currentUser = null; showView('signin')">
+                                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                                    </button>
+                                </div>
+                            </div>
+                        </nav>
+                        
+                        <div class="row mb-5">
+                            <div class="col-md-8">
+                                <h2 class="mb-4">Customer Support Dashboard</h2>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <button class="btn btn-primary" onclick="showView('new-ticket')">
+                                    <i class="fas fa-plus-circle me-1"></i>New Request
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <div class="support-card card p-4 text-center">
+                                    <div class="text-primary mb-3">
+                                        <i class="fas fa-ticket-alt fa-3x"></i>
+                                    </div>
+                                    <h3>${userTickets.length}</h3>
+                                    <p class="text-muted">Total Requests</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="support-card card p-4 text-center">
+                                    <div class="text-warning mb-3">
+                                        <i class="fas fa-clock fa-3x"></i>
+                                    </div>
+                                    <h3>${userTickets.filter(t => t.status === 'open' || t.status === 'pending').length}</h3>
+                                    <p class="text-muted">Active Requests</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="support-card card p-4 text-center">
+                                    <div class="text-success mb-3">
+                                        <i class="fas fa-check-circle fa-3x"></i>
+                                    </div>
+                                    <h3>${userTickets.filter(t => t.status === 'resolved' || t.status === 'closed').length}</h3>
+                                    <p class="text-muted">Resolved Requests</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Your Support Requests</h5>
+                            </div>
+                            <div class="card-body">
+                                ${userTickets.length > 0 ? `
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Ticket #</th>
+                                                    <th>Subject</th>
+                                                    <th>Type</th>
+                                                    <th>Status</th>
+                                                    <th>Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${userTickets.map(ticket => `
+                                                    <tr>
+                                                        <td>${ticket.ticketNumber || 'N/A'}</td>
+                                                        <td>${ticket.subject}</td>
+                                                        <td>${ticket.issueType.replace('-', ' ')}</td>
+                                                        <td><span class="ticket-badge status-${ticket.status}">${ticket.status}</span></td>
+                                                        <td>${new Date(ticket.createdAt).toLocaleDateString()}</td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                ` : `
+                                    <div class="text-center py-5">
+                                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                                        <h5>No support requests yet</h5>
+                                        <p class="text-muted">Submit your first request to get help from our support team</p>
+                                        <button class="btn btn-primary mt-2" onclick="showView('new-ticket')">
+                                            Create New Request
+                                        </button>
+                                    </div>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        const renderNewTicketForm = () => {
+            return `
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <nav class="navbar dashboard-nav mb-4 rounded">
+                            <div class="container-fluid">
+                                <a class="navbar-brand nav-brand" href="#" onclick="showView('customer-dashboard')">
+                                    <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                                </a>
+                                <div class="d-flex">
+                                    <span class="navbar-text me-3">${currentUser.email}</span>
+                                </div>
+                            </div>
+                        </nav>
+                        
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h4 class="mb-0">Create New Support Request</h4>
+                            </div>
+                            <div class="card-body">
+                                <form id="new-ticket-form">
+                                    <div class="mb-3">
+                                        <label for="issueType" class="form-label">Type of Support</label>
+                                        <select class="form-select" id="issueType" name="issueType" required>
+                                            <option value="" selected disabled>Select an option</option>
+                                            <option value="bug">Bug Report</option>
+                                            <option value="technical">Technical Issue</option>
+                                            <option value="billing">Billing Problem</option>
+                                            <option value="suggestion">Feature Suggestion</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="subject" class="form-label">Subject</label>
+                                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Briefly describe your issue" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="message" class="form-label">Description</label>
+                                        <textarea class="form-control" id="message" name="message" rows="6" placeholder="Please describe your issue in detail..." required></textarea>
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="showView('customer-dashboard')">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Submit Request</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        const renderAdminDashboard = () => {
+            // For admins, show all tickets except suggestions
+            const adminTickets = supportTickets.filter(t => t.issueType !== 'suggestion');
+            
+            return `
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="navbar dashboard-nav mb-4 rounded">
+                            <div class="container-fluid">
+                                <a class="navbar-brand nav-brand" href="#">
+                                    <i class="fas fa-cog me-2"></i>Admin Support Dashboard
+                                </a>
+                                <div class="d-flex">
+                                    <span class="navbar-text me-3">Admin: ${currentUser.email}</span>
+                                    <button class="btn btn-outline-secondary btn-sm" onclick="currentUser = null; showView('signin')">
+                                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                                    </button>
+                                </div>
+                            </div>
+                        </nav>
+                        
+                        <div class="row mb-5">
+                            <div class="col-md-8">
+                                <h2 class="mb-4">Support Ticket Management</h2>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search tickets..." id="ticket-search">
+                                    <button class="btn btn-outline-primary" type="button">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-3 mb-3">
+                                <div class="card border-primary">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-primary">${adminTickets.filter(t => t.status === 'open').length}</h3>
+                                        <p class="text-muted">Open Tickets</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="card border-warning">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-warning">${adminTickets.filter(t => t.status === 'pending').length}</h3>
+                                        <p class="text-muted">Pending</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="card border-success">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-success">${adminTickets.filter(t => t.status === 'resolved').length}</h3>
+                                        <p class="text-muted">Resolved</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="card border-secondary">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-secondary">${adminTickets.filter(t => t.status === 'closed').length}</h3>
+                                        <p class="text-muted">Closed</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">All Support Tickets</h5>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-outline-primary active">All</button>
+                                    <button type="button" class="btn btn-outline-primary">Open</button>
+                                    <button type="button" class="btn btn-outline-primary">Pending</button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                ${adminTickets.length > 0 ? `
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Ticket #</th>
+                                                    <th>Customer Email</th>
+                                                    <th>Subject</th>
+                                                    <th>Type</th>
+                                                    <th>Status</th>
+                                                    <th>Date</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${adminTickets.map(ticket => `
+                                                    <tr>
+                                                        <td>${ticket.ticketNumber}</td>
+                                                        <td>${ticket.email}</td>
+                                                        <td>${ticket.subject}</td>
+                                                        <td>${ticket.issueType.replace('-', ' ')}</td>
+                                                        <td><span class="ticket-badge status-${ticket.status}">${ticket.status}</span></td>
+                                                        <td>${new Date(ticket.createdAt).toLocaleDateString()}</td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#ticketModal${ticket.id}">
+                                                                <i class="fas fa-eye"></i> View
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                ` : `
+                                    <div class="text-center py-5">
+                                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                                        <h5>No support tickets yet</h5>
+                                        <p class="text-muted">When customers submit support requests, they will appear here</p>
+                                    </div>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ticket Modals -->
+                ${adminTickets.map(ticket => `
+                    <div class="modal fade" id="ticketModal${ticket.id}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Ticket #${ticket.ticketNumber}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <p><strong>Customer:</strong> ${ticket.email}</p>
+                                            <p><strong>Type:</strong> ${ticket.issueType.replace('-', ' ')}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><strong>Status:</strong> <span class="ticket-badge status-${ticket.status}">${ticket.status}</span></p>
+                                            <p><strong>Submitted:</strong> ${new Date(ticket.createdAt).toLocaleString()}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <h6>Subject</h6>
+                                        <p>${ticket.subject}</p>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <h6>Description</h6>
+                                        <p>${ticket.message}</p>
+                                    </div>
+                                    
+                                    ${ticket.adminResponse ? `
+                                        <div class="mb-4">
+                                            <h6>Your Response</h6>
+                                            <div class="card bg-light">
+                                                <div class="card-body">
+                                                    <p>${ticket.adminResponse}</p>
+                                                    <small class="text-muted">Last updated: ${new Date(ticket.updatedAt).toLocaleString()}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ` : ''}
+                                    
+                                    <div>
+                                        <h6>Update Ticket</h6>
+                                        <form id="update-form-${ticket.id}">
+                                            <div class="mb-3">
+                                                <label class="form-label">Status</label>
+                                                <select class="form-select" name="status">
+                                                    <option value="open" ${ticket.status === 'open' ? 'selected' : ''}>Open</option>
+                                                    <option value="pending" ${ticket.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                                    <option value="resolved" ${ticket.status === 'resolved' ? 'selected' : ''}>Resolved</option>
+                                                    <option value="closed" ${ticket.status === 'closed' ? 'selected' : ''}>Closed</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Response</label>
+                                                <textarea class="form-control" name="response" rows="4" placeholder="Type your response to the customer...">${ticket.adminResponse || ''}</textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" onclick="handleTicketUpdate(${ticket.id}, document.querySelector('#update-form-${ticket.id} [name=\"status\"]').value, document.querySelector('#update-form-${ticket.id} [name=\"response\"]').value)">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+        };
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show signin view initially
+            showView('signin');
+            
+            // Add event listeners when DOM is updated
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('#signin-form')) {
+                    e.target.closest('#signin-form').addEventListener('submit', handleSignIn);
+                }
+                if (e.target.closest('#new-ticket-form')) {
+                    e.target.closest('#new-ticket-form').addEventListener('submit', handleNewTicket);
+                }
+            });
+        });
+
+        // Initialize Bootstrap tooltips and modals when needed
+        function initBootstrap() {
+            // Check if Bootstrap is available and initialize components
+            if (typeof bootstrap !== 'undefined') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => new bootstrap.Modal(modal));
+            }
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
