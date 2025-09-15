@@ -1,10 +1,10 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $firstName = htmlspecialchars($_POST['firstName']);
-    $lastName  = htmlspecialchars($_POST['lastName']);
-    $email     = htmlspecialchars($_POST['email']);
-    $phone     = htmlspecialchars($_POST['phone']);
-    $message   = htmlspecialchars($_POST['message']);
+    $firstName = strip_tags($_POST['firstName']);
+    $lastName  = strip_tags($_POST['lastName']);
+    $email     = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $phone     = strip_tags($_POST['phone']);
+    $message   = strip_tags($_POST['message']);
 
     $to = "info@codreconcile.com";  
     $subject = "New Contact Form Submission";
