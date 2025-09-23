@@ -1,11 +1,11 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $firstName = htmlspecialchars($_POST['firstName']);
-    $lastName = htmlspecialchars($_POST['lastName']);
-    $email = htmlspecialchars($_POST['email']);
-    $issueType = htmlspecialchars($_POST['issueType']);
-    $subject = htmlspecialchars($_POST['subject']);
-    $message = htmlspecialchars($_POST['message']);
+    $firstName = strip_tags($_POST['firstName']);
+    $lastName  = strip_tags($_POST['lastName']);
+    $email     = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $issueType = strip_tags($_POST['issueType']);
+    $subject   = strip_tags($_POST['subject']);
+    $message   = strip_tags($_POST['message']);
 
     $to = "support@codreconcile.com";
     $email_subject = "Support Request: $subject";
