@@ -26,12 +26,20 @@
             font-weight: bold;
             color: var(--primary-color);
         } 
+        @media(max-width: 768px) {
+            .hero-images {
+                height: auto !important;
+            }
+            .hero-img, .hero-images img {
+                position: static !important;
+                transform: none !important;
+            }
+        }
         .testimonial-card {
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: transform 0.3s;
         }
-        
         .testimonial-card:hover {
             transform: translateY(-5px);
         }
@@ -63,10 +71,10 @@
                 </div>
 
                 <div class="col-lg-6 mt-5 mt-lg-0">
-                    <div class="position-relative d-flex justify-content-center" style="height: 490px;">
-                        <img src="./images/total_orders.png" class="position-absolute rounded-3 shadow" style="width: 550px; top: 0; left: 0%; transform: rotate(-2deg);">
-                        <img src="./images/dispute_orders.png" class="position-absolute rounded-3 shadow" style="width: 550px; top: 150px; left: 28%; transform: rotate(3deg);">
-                        <img src="./images/prepaid_orders.png" class="position-absolute rounded-3 shadow" style="width: 550px; top: 300px; left: -15%; transform: rotate(-1deg);">
+                    <div class="position-relative d-flex justify-content-center hero-images" style="height: 490px; position: relative;">
+                        <img src="./images/total_orders.png" class="hero-img position-absolute img-fluid rounded-4 shadow" style="width: 550px; top: 0; left: 0%; transform: rotate(-2deg);">
+                        <img src="./images/dispute_orders.png" class="position-absolute rounded-4 shadow d-none d-md-block" style="width: 550px; top: 150px; left: 28%; transform: rotate(3deg);">
+                        <img src="./images/prepaid_orders.png" class="position-absolute rounded-4 shadow d-none d-md-block" style="width: 550px; top: 300px; left: -15%; transform: rotate(-1deg);">
                     </div>
                 </div>
             </div>
